@@ -14,11 +14,10 @@ class AhkasSqlite {
   Future<bool> ensureInitialize({
     required BuildContext context,
     required String databaseName,
-    List<String> migrationFilesPath = const [],
   }) async {
     final files = await _readAllMigrationFile(context);
 
-    for (var path in files) {
+    for (String path in files) {
       _migrationScript.add(await _loadAsset(path: path));
     }
 
