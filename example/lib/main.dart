@@ -38,7 +38,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> initDatabase() async {
-    await AhkasSqlite.getInstance().ensureInitialize(databaseName: 'ahkas_database_util');
+    await AhkasSqlite.getInstance().ensureInitialize(
+      databaseName: 'ahkas_database_util',
+      forceMigrate: true,
+    );
     await queryAllData();
   }
 
@@ -53,11 +56,9 @@ class _HomePageState extends State<HomePage> {
   Future<void> insertData() async {
     await AhkasSqlite.getInstance().database.insert('users', {
       'name': 'Sopheak - ${users.length}',
-      'phone': '0968590557',
-      'email': 'dev.nhorsopheak@gmail.com',
       'user_name': 'sopheak',
       'password': '123',
-      'active': 1,
+      'status': 1,
     });
     await queryAllData();
   }
