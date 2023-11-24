@@ -12,11 +12,7 @@ class AhkasSqlite {
   final _migrationScript = [];
 
   Future<bool> ensureInitialize({required String databaseName}) async {
-    final files = await _readAllMigrationFile();
-
-    for (String path in files) {
-      _migrationScript.add(await _loadAsset(path: path));
-    }
+    _migrationScript.addAll(await _readAllMigrationFile());
 
     database = await openDatabase(
       '$databaseName.db',
@@ -45,9 +41,5 @@ class AhkasSqlite {
     final data = manifestMap.keys.where((String key) => key.contains('.sql')).toList();
     await Future.forEach(data, (element) async => result.add(await rootBundle.loadString(element)));
     return result;
-  }
-
-  Future<String> _loadAsset({required String path}) async {
-    return await rootBundle.loadString(path);
   }
 }
