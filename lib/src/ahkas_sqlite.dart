@@ -14,10 +14,9 @@ class AhkasSqlite {
   Future<bool> ensureInitialize({
     required BuildContext context,
     required String databaseName,
+    required List<String> migrationFile,
   }) async {
-    final files = await _readAllMigrationFile(context);
-
-    for (String path in files) {
+    for (String path in migrationFile) {
       _migrationScript.add(await _loadAsset(path: path));
     }
 
@@ -41,7 +40,7 @@ class AhkasSqlite {
     return true;
   }
 
-  Future<List<String>> _readAllMigrationFile(BuildContext context) async {
+  Future<List<String>> readAllMigrationFile(BuildContext context) async {
     final result = <String>[];
     var assetsFile = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
     final Map<String, dynamic> manifestMap = json.decode(assetsFile);
