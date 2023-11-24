@@ -11,12 +11,10 @@ class AhkasSqlite {
   late int databaseVersion = 0;
   final _migrationScript = [];
 
-  Future<bool> ensureInitialize({
-    required BuildContext context,
-    required String databaseName,
-    required List<String> migrationFile,
-  }) async {
-    for (String path in migrationFile) {
+  Future<bool> ensureInitialize({required String databaseName}) async {
+    final files = await _readAllMigrationFile();
+
+    for (String path in files) {
       _migrationScript.add(await _loadAsset(path: path));
     }
 
@@ -40,9 +38,9 @@ class AhkasSqlite {
     return true;
   }
 
-  Future<List<String>> readAllMigrationFile(BuildContext context) async {
+  Future<List<String>> _readAllMigrationFile() async {
     final result = <String>[];
-    var assetsFile = await DefaultAssetBundle.of(context).loadString('AssetManifest.json');
+    var assetsFile = await rootBundle.loadString('AssetManifest.json');
     final Map<String, dynamic> manifestMap = json.decode(assetsFile);
     final data = manifestMap.keys.where((String key) => key.contains('.sql')).toList();
     await Future.forEach(data, (element) async => result.add(await rootBundle.loadString(element)));
