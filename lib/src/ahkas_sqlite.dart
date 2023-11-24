@@ -8,20 +8,20 @@ class AhkasSqlite {
   }
 
   late Database database;
-  late int databaseVersion = 0;
   final _migrationScript = [];
 
   Future<bool> ensureInitialize({required String databaseName}) async {
     _migrationScript.addAll(await _readAllMigrationFile());
-
     database = await openDatabase(
       '$databaseName.db',
       version: _migrationScript.length + 1,
       onCreate: (Database db, int version) async {
-        // await Future.forEach(_initialScript, (String script) async {
-        //   await db.execute(script);
-        // });
+        for (int i = 0; i < _migrationScript.length; i++) {
+          await db.execute(_migrationScript.elementAt(i));
+        }
+
         log('** database created');
+        log('** created ${_migrationScript.length} table');
       },
       onUpgrade: (Database db, int oldVersion, int newVersion) async {
         for (int i = oldVersion - 1; i < newVersion - 1; i++) {
