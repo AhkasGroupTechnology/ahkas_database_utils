@@ -8,7 +8,6 @@ import 'package:flutter/widgets.dart';
 import 'package:mysql1/mysql1.dart';
 import 'package:sqflite/sqflite.dart';
 
-
 export 'package:mysql1/mysql1.dart';
 export 'package:sqflite/sqflite.dart';
 
