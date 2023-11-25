@@ -7,6 +7,7 @@ abstract class BaseService<T> {
   Future<bool> updateAndSync(int id, T data, Function onSynced);
   Future<bool> delete(int id);
   Future<bool> deleteAndSync(int id, Function onSynced);
-  Future<List<T>> retriveData();
+  Future<List<T>> retriveDataLocal();
+  Future<List<T>> retriveDataOnline();
   Future<void> syncData();
 }
