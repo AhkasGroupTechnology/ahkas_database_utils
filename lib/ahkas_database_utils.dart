@@ -12,6 +12,7 @@ export 'package:sqflite/sqflite.dart';
 
 part 'src/ahkas_mysql.dart';
 part 'src/ahkas_sqlite.dart';
+part 'src/base_service.dart';
 part 'src/base_sync_repo.dart';
 part 'src/database_utils.dart';
 part 'src/migration.dart';
