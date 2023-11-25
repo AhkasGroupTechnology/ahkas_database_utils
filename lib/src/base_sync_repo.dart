@@ -1,7 +1,7 @@
 part of ahkas_database_utils;
 
 abstract class NetworkRepoInterface<T> {
-  Future<int> addData(T data) => Future.value(0);
+  Future<int> saveData(T data) => Future.value(0);
   Future<bool> saveDataBatch(List<T> data) => Future.value(false);
   Future<bool> updateData(T data) => Future.value(false);
   Future<List<T>> getAllData() => Future.value([]);
